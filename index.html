@@ -1,0 +1,484 @@
+<html>
+
+<head>
+	<title>COVID-19</title>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet" />
+	<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+	<script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+	<link href="lab4.css" rel="stylesheet"/>
+</head>
+
+<body>
+  <!-- geocoder -->
+	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+	<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+
+	<h1>Make youself save in COVID-19</h1>
+	<div class="introduce">
+		<h2>What is COVID-19?</h2>
+		<p>Coronavirus disease (COVID-19) is an infectious disease caused by a newly discovered coronavirus. Older people and people with cardiovascular disease, diabetes, chronic respiratory disease, and cancer are more likely to develop serious illness. It takes about 5–6 days from when someone is infected with the virus for symptoms to show, however it can take up to 14 days. </p>
+		<ul>
+			<li><b>Most Common Symptoms:</b></li>
+				<ul>
+					<li>Fever</li>
+					<li>Dry cough</li>
+					<li>Tiredness</li>
+				</ul>
+			<li><b>Less Common Symptoms:</b></li>
+			<ul>
+				<li>Aches and pains</li>
+				<li>Sore throat</li>
+				<li>Diarrhoea</li>
+				<li>Conjunctivitis</li>
+				<li>Headache</li>
+				<li>Loss of taste or smell</li>
+				<li>A rash on skin, or discolouration of fingers or toes</li>
+			</ul>
+			<li><b>Serious Symptoms:</b></li>
+			<ul>
+				<li>Difficulty breathing or shortness of breath</li>
+				<li>Chest pain or pressure</li>
+				<li>Diarrhoea</li>
+				<li>Loss of speech or movement</li>
+			</ul>
+		</ul>
+		<img src="symptoms.png" alt="Covid-19 symptoms" width=100%>
+	</div>
+
+	<div class="chart">
+		<h2>Is Situation getting worse?</h2>
+		<canvas id="ageChart" width="600" height="300"></canvas>
+		<p>We can easily found out there are three peaks in this chart,each of them is in March, July, and November. Each of the breakout has a certain reason. The first known American deaths occurred in February, but were not known to be caused by COVID-19 until April. And Until mid-March that state and locarl start to take actions. Thus, cause the first breakout. However, after the infection cases drop,some state relaxed restrictions, and cause a second rise began in June. As Thanksgiving coming, people gathered together to celebrate finally cause the third breakout, also the worst one.
+		</p>
+	</div>
+
+	<div class="hospital">
+		<h2>Hospitals Are Running Out of Beds</h2>
+		<p>As the coming of the third breakout, hospitals are facing a crisis-level shortage of beds and staff to provide adequate care for patients. According to the research the bed occupancy rates in Wyoming is minimum and its value is 0.4. Washington, D.C. is maximum, the value is 0.76. Moreover, the ICU bed occupancy rate is higher than all bad occupancy rates.  </p>
+	</div>
+	<div id="map0all">
+		<h3>All Bed Occupancy Rates In Hospitals</h3>
+
+		<div id="map0"></div>
+
+		<div class="map0-overlay top">
+			<nav id="menu"></nav>
+			<div class="map0-overlay-inner">
+				<h3>Legend</h3>
+				<div class="legend">
+					<svg width="60" height="20">
+						<rect width="55" height="18" style="fill:rgb(255, 179, 179)" />
+				  </svg>
+					<text>0.00 - 0.25</text>
+				</div>
+				<div class="legend">
+					<svg width="60" height="20">
+						<rect width="55" height="18" style="fill:rgb(255, 51, 51)" />
+				  </svg>
+					<text>0.25 - 0.50</text>
+				</div>
+				<div class="legend">
+					<svg width="60" height="20">
+						<rect width="55" height="18" style="fill:rgb(179, 0, 0)" />
+				  </svg>
+					<text>0.50 - 0.75</text>
+				</div>
+				<div class="legend">
+					<svg width="60" height="20">
+						<rect width="55" height="18" style="fill:rgb(102, 0, 0)" />
+				  </svg>
+					<text>0.75 - 1.00</text>
+				</div>
+				<div class="legend">
+					<svg width="60" height="20">
+						<rect width="55" height="18" style="fill:rgb(0, 0, 0)" />
+				  </svg>
+					<text>No Data</text>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="protect">
+		<h2>Protect Yourselves From Infection</h2>
+			<div id="protecttext">
+				<ul>
+					<li>Maintain at least a 1-metre distance between yourself and others.
+					 <ul>
+						 <li>Avoid the 3Cs: spaces that are closed, crowded or involve close contact.</li>
+						 <li>Meet people outside.</li>
+						 <li>Avoid crowded or indoor settings</li>
+					 </ul>
+					</li>
+					<li>Make wearing a mask a normal part of being around other people.</li>
+					<li>Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water.</li>
+				</ul>
+			</div>
+			<div id="protectimg">
+				<img src="protectyourself.jpg" alt="Ways protect yourself and others from getting sick">
+			</div>
+			<p>So it would be safe for you to order food delivery during the coronavirus outbreak if you do not want to cook. The map below shows the restaurant provide delivery, to-go, or drive-through services.</p>
+	</div>
+
+	<div id="map1all">
+		<h3>Restaurants Provide Food Delivery or Take-out during COVID19 in the City of Seattle </h3>
+		<div id="map1"></div>
+		<div class="map1-overlay top">
+			<div class="map1-overlay-inner">
+				<h3>Legend</h3>
+				<div class="legend">
+					<svg width= "62" height="10">
+					<circle id="plate" cx="30" cy="5" r="5" stroke="#ffffff" stroke-width="1" fill="#cc66ff"/>
+					</svg>
+					<text>1 Restaurant</text>
+				</div>
+				<div class="legend">
+					<svg width= "62" height="20">
+					<circle id="plate" cx="30" cy="10" r="10" fill="#6699ff"/>
+					</svg>
+					<text>2 - 50 Restaurants</text>
+				</div>
+				<div class="legend">
+					<svg width= "62" height="30">
+					<circle id="plate" cx="30" cy="15" r="15" fill="#99ff99"/>
+					</svg>
+					<text>51 - 100 Restaurants</text>
+				</div>
+				<div class="legend">
+					<svg width= "62" height="40">
+					<circle id="plate" cx="30" cy="20" r="20" fill="#ffff66"/>
+					</svg>
+					<text>101 - 200 Restaurants</text>
+				</div>
+				<div class="legend">
+					<svg width= "62" height="50">
+					<circle id="plate" cx="30" cy="25" r="25" fill="#ff9966"/>
+					</svg>
+					<text>201 - 400 Restaurants</text>
+				</div>
+				<div class="legend">
+					<svg width= "62" height="60">
+					<circle id="plate" cx="30" cy="30" r="30" fill="#f28cb1"/>
+					</svg>
+					<text>400+ Restaurant</text>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="data">
+		<h2>Data comes from </h2>
+		<ul>
+			<li><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public" target="_blank">Center for Disease Control and Prevention</a></li>
+			<li><a href="https://en.wikipedia.org/wiki/COVID-19_pandemic_in_the_United_States" target="_blank">COVID-19 pandemic in the United States-Wikipedia</a></li>
+			<li><a href="https://www.covidcaremap.org/#data" target="_blank">CovidCareMap</a></li>
+			<li><a href="https://www.who.int/health-topics/coronavirus#tab=tab_1" target="_blank">World Health Organization</a></li>
+			<li><a href="https://www.data.gov/" target="_blank">DATA.GOVv/</a></li>
+		</ul>
+	</div>
+
+	<script>
+//chart
+	var ctx = document.getElementById("ageChart");
+	var barChart= new Chart(ctx, {
+		  type:'line',
+			data: {
+				labels: ["7-Mar","14-Mar","21-Mar","28-Mar","4-Apr","11-Apr","18-Apr","25-Apr","2-May","9-May","16-May","23-May","30-May","6-Jun","13-Jun","20-Jun","27-Jun","4-Jul","11-Jul","18-Jul","25-Jul","1-Aug","8-Aug","15-Aug","22-Aug","29-Aug","5-Sep","12-Sep","19-Sep","26-Sep","3-Oct","10-Oct","17-Oct","24-Oct","31-Oct","7-Nov","14-Nov","21-Nov","28-Nov"],
+				datasets: [{
+					label: "0-4 years-old",
+					borderColor: "#ff3300",
+					data: [0,0,0,6,11,9,11,10,11,9,13,17,14,16,14,15,13,10,19,14,24,19,12,13,12,11,21,6,10,15,9,8,12,11,14,26,24,29,23],
+					fill: false
+				},
+				{
+				 label: "5-17 years-old",
+				 borderColor: "#ff9966",
+				 data: [0,0,4,5,11,7,8,14,20,21,15,20,25,18,14,11,20,21,33,31,26,20,25,27,26,29,22,18,21,12,19,23,27,24,31,58,63,43,36],
+				 fill: false
+				},
+				{
+				 label: "18-49 years-old",
+				 borderColor: "#ffff00",
+				 data: [10,53,254,637,654,632,733,771,771,737,704,729,631,520,466,479,586,741,903,945,819,758,721,611,524,495,406,389,373,405,426,462,571,579,694,914,1121,1061,774],
+				 fill: false
+			  },
+				{
+				 label: "50-64 years-old",
+				 borderColor: "#33cc33",
+				 data: [7,79,286,792,1018,911,954,822,849,768,710,667,523,430,347,360,415,517,703,749,725,643,568,523,489,353,347,344,314,362,384,467,499,663,782,963,1250,1280,959],
+				 fill: false
+			  },
+				{
+				 label: "65+ years-old",
+				 borderColor: "#0000ff",
+				 data: [17,85,415,1054,1391,1442,1549,1505,1384,1129,1039,955,786,590,466,429,448,650,857,911,914,830,767,677,656,540,507,480,489,551,574,748,834,1004,1277,1695,2317,2547,1929],
+				 fill: false
+			 }]
+		  },
+		  options: {
+				title: {
+					display: true,
+					text: "COVID-19 Associated Hospitalizations By Age"
+				}
+		  }
+	 });
+//map1
+	 var filterGroup = document.getElementById('filter-group');
+	 mapboxgl.accessToken = 'pk.eyJ1IjoiY2hpYW55dSIsImEiOiJja2hjcG5ubXUwMXZ4Mnp0OW93enk5Yjh2In0.PgRvkVtqOFh9ew6lp-BFuw';
+
+	 var map0 = new mapboxgl.Map({
+ 	    container: 'map0',
+ 	    style: 'mapbox://styles/mapbox/streets-v11', // mapbox://styles/chianyu/ckigovdit5sax19n3gtllu8aq
+ 	    zoom: 3, // starting zoom
+			center:[-96, 35]
+ 	});
+
+	map0.on('load', function(){
+
+		map0.addSource('healthcarecapacity',{
+			"type": 'geojson',
+			"data": 'ushealthcarecapacitycountyCovidCareMap.geojson',
+		});
+
+		map0.addLayer({
+			"id":"hcapacity",
+			"type":"fill",
+			"source":"healthcarecapacity",
+			"layout":{
+				'visibility': 'visible'
+			},
+			"paint":{
+				"fill-color":[
+				  "step",
+				  [
+				    "get",
+				    "All_Bed_Occupancy_Rate"
+				  ],
+					"hsl(0, 100%, 85%)",
+					0.25,
+					"hsl(0, 100%, 60%)",
+					0.5,
+					"hsl(0, 100%, 35%)",
+					0.75,
+					"hsl(0, 100%, 20%)"
+				]
+			}
+		});
+		map0.addSource('healthcarecapacitystate',{
+			"type": 'geojson',
+			"data": 'ushealthcarecapacitystate.geojson',
+		});
+
+		map0.addLayer({
+			"id":"hcapacitystate",
+			"type":"fill",
+			"source":"healthcarecapacitystate",
+			"layout":{
+				'visibility': 'visible'
+			},
+			"paint":{
+				"fill-color":[
+					"step",
+					[
+						"get",
+						"All_Bed_Occupancy_Rate"
+					],
+					"rgb(255, 179, 179)",
+					0.25,
+					"rgb(255, 51, 51)",
+					0.5,
+					"rgb(179, 0, 0)",
+					0.75,
+					"rgb(102, 0, 0)"
+				]
+			}
+		});
+	});
+	var toggleableLayerIds = ['hcapacitystate', 'hcapacity'];
+	for (var i = 0; i < toggleableLayerIds.length; i++) {
+		var id = toggleableLayerIds[i];
+		var link = document.createElement('a');
+		link.href = '#';
+		link.className = 'active';
+		link.textContent = id;
+
+		link.onclick = function (e) {
+			var clickedLayer = this.textContent;
+			e.preventDefault();
+			e.stopPropagation();
+			var visibility = map0.getLayoutProperty(clickedLayer, 'visibility');
+			// toggle layer visibility by changing the layout object's visibility property
+			if (visibility === 'visible') {
+				map0.setLayoutProperty(clickedLayer, 'visibility', 'none');
+				this.className = '';
+			} else {
+				this.className = 'active';
+				map0.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+			}
+		};
+		var layers = document.getElementById('menu');
+		layers.appendChild(link);
+	}
+	map0.on('click', 'hcapacity', function (e) {
+		new mapboxgl.Popup()
+		.setLngLat(e.lngLat)
+		.setHTML("<b>All Bed Occupancy of County</b><br>" +"<b>State: </b>" + e.features[0].properties.State + "<br><b>County: </b>" + e.features[0].properties.County_Name + "<br><b>Staffed All Beds: </b>" + e.features[0].properties.Staffed_All_Beds  + "<br><b>Staffed ICU Beds: </b>" + e.features[0].properties.Staffed_ICU_Beds + "<br><b>All Bed Occupancy Rate: </b>" + e.features[0].properties.All_Bed_Occupancy_Rate + "<br><b>ICU Bed Occupancy Rate: </b>" + e.features[0].properties.ICU_Bed_Occupancy_Rate )
+		.addTo(map0);
+	});
+	map0.on('click', 'hcapacitystate', function (e) {
+		new mapboxgl.Popup()
+		.setLngLat(e.lngLat)
+		.setHTML("<b>All Bed Occupancy of State</b><br>" + "<b>State: </b>" + e.features[0].properties.State + "<br><b>Staffed All Beds: </b>" + e.features[0].properties.Staffed_All_Beds  + "<br><b>Staffed ICU Beds: </b>" + e.features[0].properties.Staffed_ICU_Beds + "<br><b>All Bed Occupancy Rate: </b>" + e.features[0].properties.All_Bed_Occupancy_Rate + "<br><b>ICU Bed Occupancy Rate: </b>" + e.features[0].properties.ICU_Bed_Occupancy_Rate )
+		.addTo(map0);
+	});
+	map0.on('mouseenter', 'hcapacity', function () {
+		map0.getCanvas().style.cursor = 'pointer';
+	});
+	map0.on('mouseenter', 'hcapacitystate', function () {
+		map0.getCanvas().style.cursor = 'pointer';
+	});
+	map0.on('mouseleave', 'hcapacity', function () {
+		map0.getCanvas().style.cursor = '';
+	});
+	map0.on('mouseleave', 'hcapacitystate', function () {
+		map0.getCanvas().style.cursor = '';
+	});
+
+	 var map1 = new mapboxgl.Map({
+ 	    container: 'map1',
+ 	    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+ 	    zoom: 8, // starting zoom
+			center:[-122, 47.65]
+ 	});
+
+
+	 map1.on('load', function(){
+
+		 map1.addSource('restaurants',{
+			 "type": 'geojson',
+			 "data": 'Restaurants.geojson',
+			 "cluster": true,
+			 "clusterMaxZoom": 15,
+			 "clusterRadius": 30
+		 });
+
+		 map1.addLayer({
+			 "id": "clusters",
+			 "type":"circle",
+			 "source":"restaurants",
+			 "filter": ['has', 'point_count'],
+			 "paint": {
+				 "circle-color": [
+					 'step',
+						['get', 'point_count'],
+						'#6699ff',
+						50,
+						'#99ff99',
+						100,
+						'#ffff66',
+						200,
+						'#ff9966',
+						400,
+						'#f28cb1'
+				 ],
+				 'circle-radius': [
+					 'step',
+				   ['get', 'point_count'],
+					 10,
+					 50,
+					 15,
+					 100,
+					 20,
+					 200,
+					 25,
+					 400,
+					 30
+				]
+			 }
+		 });
+
+		 map1.addLayer({
+			 id: 'cluster-count',
+			 type: 'symbol',
+			 source: 'restaurants',
+			 filter: ['has', 'point_count'],
+			 layout: {
+				 'text-field': '{point_count_abbreviated}',
+				 'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+				 'text-size': 12
+			 }
+		 });
+
+		 map1.addLayer({
+			 id: 'unclustered-point',
+			 type: 'circle',
+			 source: 'restaurants',
+			 filter: ['!', ['has', 'point_count']],
+			 paint: {
+				 'circle-color': '#cc66ff',
+				 'circle-radius': 5,
+				 'circle-stroke-width': 1,
+				 'circle-stroke-color': '#ffffff'
+			 }
+		 });
+	 });
+
+	 map1.on('click', 'clusters', function (e) {
+		 var features = map1.queryRenderedFeatures(e.point, {
+			 layers: ['clusters']
+		 });
+		 var clusterId = features[0].properties.cluster_id;
+		 map1.getSource('restaurants').getClusterExpansionZoom(
+			 clusterId,
+			 function (err, zoom) {
+				 if (err) return;
+				 map1.easeTo({
+					 center: features[0].geometry.coordinates,
+					 zoom: zoom
+				 });
+			 }
+		 );
+	 });
+	 map1.on('click', 'unclustered-point', function (e) {
+		 var coordinates = e.features[0].geometry.coordinates.slice();
+		 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) { coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+		 }
+		 new mapboxgl.Popup()
+		 .setLngLat(e.lngLat)
+		 .setHTML("<b>Restaurant Name: </b>" + e.features[0].properties.business_name + "<br><b>Address: </b>" + e.features[0].properties. address_help_your_customer_find + "<br><b>Phone: </b>" + e.features[0].properties.phone_number_to_place_an_order + "<br><b>Service: </b>" + e.features[0].properties.are_you_open_for + "<br><b>Websites: </b>" + e.features[0].properties.business_website)
+		 .addTo(map1);
+	 });
+	 map1.on('mouseenter', 'clusters', function () {
+		 map1.getCanvas().style.cursor = 'pointer';
+	 });
+	 map1.on('mouseenter', 'unclustered-point', function () {
+		 map1.getCanvas().style.cursor = 'pointer';
+	 });
+	 map1.on('mouseleave', 'clusters', function () {
+		 map1.getCanvas().style.cursor = '';
+	 });
+	 map1.on('mouseleave', 'unclustered-point', function () {
+		 map1.getCanvas().style.cursor = '';
+	 });
+	 map1.addControl(
+		new MapboxGeocoder({
+		accessToken: mapboxgl.accessToken,
+		mapboxgl: mapboxgl
+		})
+		);
+		//map1navigation
+	 map1.addControl(new mapboxgl.NavigationControl());
+
+
+
+	</script>
+
+</body>
+
+</html>
